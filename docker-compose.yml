@@ -75,26 +75,7 @@ services:
     volumes:
       - grafana:/var/lib/grafana
 
-  portainer:
-    image: portainer/portainer
-    command: --no-auth --host=unix:///var/run/docker.sock
-    ports:
-      - 9000:9000
-    networks:
-      - elasticsearch
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "5"
-    deploy:
-      placement:
-        constraints:
-         - node.role == manager
-
-  logstash:
+ logstash:
     image: docker.elastic.co/logstash/logstash:6.0.0
     command: sh -c "logstash -f /logstash/logstash.conf"
     environment:
